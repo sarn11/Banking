@@ -7,9 +7,9 @@ import java.util.StringTokenizer;
  * @author Aum Pathak, Tyler Sarno
  */
 public class Date implements Comparable<Date> {
-    private int year;
-    private int month;
-    private int day;
+    private final int year;
+    private final int month;
+    private final int day;
 
     /*
     getter method for day
@@ -42,13 +42,9 @@ public class Date implements Comparable<Date> {
     public Date(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
         if (s.countTokens() != 3) throw new IllegalArgumentException();
-        int mm = Integer.parseInt(s.nextToken());
-        int dd = Integer.parseInt(s.nextToken());
-        int yy = Integer.parseInt(s.nextToken());
-
-        this.year = yy;
-        this.month = mm;
-        this.day = dd;
+        this.month = Integer.parseInt(s.nextToken());
+        this.day = Integer.parseInt(s.nextToken());
+        this.year = Integer.parseInt(s.nextToken());
     }
 
     /*
@@ -68,15 +64,9 @@ public class Date implements Comparable<Date> {
     @return true if it is a leap year, false otherwise
      */
     public static boolean isLeap(int year) {
-        if (year % 4 != 0) {
-            return false;
-        } else if (year % 400 == 0) {
-            return true;
-        } else if (year % 100 == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        if (year % 4 != 0) return false;
+        else if (year % 400 == 0) return true;
+        else return year % 100 != 0;
     }
 
     /*
@@ -142,19 +132,29 @@ public class Date implements Comparable<Date> {
     }
 
     public static void main(String[] args) {
-        // get today
-        Date today = new Date();
-        System.out.println(today);
+//        // get today
+//        Date today = new Date();
+//        System.out.println(today);
+//
+//        // tomorrow
+//        Date tomorrow = new Date("02/07/2021");
+//        System.out.println(tomorrow.isValid());
+//        System.out.println(today.compareTo(tomorrow)); // today is earlier than tomorrow
+//
+//        // 2013 is not leap year
+//        System.out.println(Date.isLeap(2013) ? "is leap" : "is not leap");
+//
+//        Date rando = new Date("21/21/2050");
+//        System.out.println(rando.isValid());
 
-        // tomorrow
-        Date tomorrow = new Date("02/07/2021");
-        System.out.println(tomorrow.isValid());
-        System.out.println(today.compareTo(tomorrow)); // today is earlier than tomorrow
+        Profile x1 = new Profile("Tyler", "Sarno", "02/22/1990");
+        System.out.println(x1);
+        Profile x2 = new Profile("Aum", "Pathak", "6/13/1989");
+        Profile x3 = new Profile("Tyler", "Sarno", "02/22/1990");
+        System.out.println(x1.equals(x2));
+        System.out.println(x2);
+        System.out.println(x1.equals(x3));
 
-        // 2013 is not leap year
-        System.out.println(Date.isLeap(2016) ? "is leap" : "is not leap");
 
-        Date rando = new Date("21/21/2050");
-        System.out.println(rando.isValid());
     }
 }
