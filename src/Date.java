@@ -59,12 +59,12 @@ public class Date implements Comparable<Date> {
         StringBuilder s = new StringBuilder();
 
         if (this.month < 10) s.append("0");
-        s.append(String.valueOf(this.month));
+        s.append(this.month);
         s.append("/");
         if (this.day < 10) s.append("0");
-        s.append(String.valueOf(this.day));
+        s.append(this.day);
         s.append("/");
-        s.append(String.valueOf(this.year));
+        s.append(this.year);
 
         return s.toString();
     }
@@ -107,7 +107,7 @@ public class Date implements Comparable<Date> {
     public static void main(String[] args) {
         // get today
         Date today = new Date();
-        System.out.println(today.toString());
+        System.out.println(today);
 
         // tomorrow
         Date tomorrow = new Date("02/07/2021");
