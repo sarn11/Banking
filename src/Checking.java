@@ -5,6 +5,15 @@ A subclass of Account, this class defines the checking account.
 public class Checking extends Account{
 
     /**
+     *
+     */
+    public Checking (Profile holder, Double deposit) {
+        this.holder = holder;
+        this.balance = deposit;
+        this.closed = false;
+    }
+
+    /**
      * Calculate the monthly interest you will receive this month with the current balance.
      * @return the interest as a double.
      */

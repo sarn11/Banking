@@ -148,13 +148,17 @@ public class Date implements Comparable<Date> {
 //        System.out.println(rando.isValid());
 
         Profile x1 = new Profile("Tyler", "Sarno", "02/22/1990");
-        System.out.println(x1);
+//        System.out.println(x1);
         Profile x2 = new Profile("Aum", "Pathak", "6/13/1989");
         Profile x3 = new Profile("Tyler", "Sarno", "02/22/1990");
-        System.out.println(x1.equals(x2));
-        System.out.println(x2);
-        System.out.println(x1.equals(x3));
+//        System.out.println(x1.equals(x2));
+//        System.out.println(x2);
+//        System.out.println(x1.equals(x3));
 
+        Checking c1 = new Checking(x1,200.0);
+        Checking c2 = new Checking(x2, 300.0);
+        System.out.println(c1);
+        System.out.println(c1.equals(c2));
 
     }
 }
