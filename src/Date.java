@@ -75,17 +75,8 @@ public class Date implements Comparable<Date> {
         if ((month < 1) || (month > 12)) return false;
         if ((day < 1) || (day > 31)) return false;
         return switch (month) {
-            case 1 -> true;
             case 2 -> (isLeap(year) ? day <= 29 : day <= 28);
-            case 3 -> true;
-            case 4 -> day < 31;
-            case 5 -> true;
-            case 6 -> day < 31;
-            case 7 -> true;
-            case 8 -> true;
-            case 9 -> day < 31;
-            case 10 -> true;
-            case 11 -> day < 31;
+            case 4, 6, 9, 11 -> day < 31;
             default -> true;
         };
     }
