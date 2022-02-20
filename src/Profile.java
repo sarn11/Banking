@@ -7,7 +7,7 @@ public class Profile {
     private String lname;
     private Date dob;
 
-    /*
+    /**
     constructor for the profile object.
     @param fname the first name of the customer.
     @param lname the last name of the customer.
@@ -20,7 +20,7 @@ public class Profile {
         this.dob = new Date(dob);
     }
 
-    /*
+    /**
     convert profile to a string.
     @return a string of all the info about the profile.
      */
@@ -29,7 +29,7 @@ public class Profile {
         return fname + " " + lname + " " + dob.toString();
     }
 
-    /*
+    /**
     check to see if two profiles are equal.
     @param obj the object you are comparing.
     @return true if the two profiles are the same.

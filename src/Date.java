@@ -11,7 +11,7 @@ public class Date implements Comparable<Date> {
     private final int month;
     private final int day;
 
-    /*
+    /**
     getter method for day
     @return int value for day
      */
@@ -19,7 +19,7 @@ public class Date implements Comparable<Date> {
         return this.day;
     }
 
-    /*
+    /**
     getter method for month
     @return the int value for the month
      */
@@ -27,7 +27,7 @@ public class Date implements Comparable<Date> {
         return this.month;
     }
 
-    /*
+    /**
     getter method for year
     @return the int value for the year
      */
@@ -35,9 +35,9 @@ public class Date implements Comparable<Date> {
         return this.year;
     }
 
-    /*
+    /**
     Constructor for the date object where the user can specify a certain day.
-    @param takes in the string form of a date
+    @param date takes in the string form of a date
      */
     public Date(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
@@ -47,7 +47,7 @@ public class Date implements Comparable<Date> {
         this.year = Integer.parseInt(s.nextToken());
     }
 
-    /*
+    /**
     constructor without parameters for the date object
     it automatically sets the date to today's date
      */
@@ -58,9 +58,9 @@ public class Date implements Comparable<Date> {
         this.year = TODAY.get(Calendar.YEAR);
     }
 
-    /*
+    /**
     Check to see if a certain year is a leap year
-    @param takes in an int value for the year
+    @param year takes in an int value for the year
     @return true if it is a leap year, false otherwise
      */
     public static boolean isLeap(int year) {
@@ -69,7 +69,7 @@ public class Date implements Comparable<Date> {
         else return year % 100 != 0;
     }
 
-    /*
+    /**
     convert date to string
     @return the date in the form of a string
     */
@@ -88,7 +88,7 @@ public class Date implements Comparable<Date> {
         return s.toString();
     }
 
-    /*
+    /**
     checking if the date is valid
     @return true if the date is valid and false otherwise
      */
@@ -103,9 +103,9 @@ public class Date implements Comparable<Date> {
         };
     }
 
-    /*
+    /**
     compareTo method for the Date object
-    @param the date you want to compare
+    @param date the date you want to compare
     @return 1 if the date is greater, -1 if the date is less than, and 0
     if the dates are the same
      */

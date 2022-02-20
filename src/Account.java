@@ -9,9 +9,19 @@ public abstract class Account {
     @Override
     public String toString() { }
 
-    public void withdraw(double amount) { }
+    public void withdraw(double amount) {
+        if (this.closed || this.balance < amount) return; //error trapping(no funds or closed account)
+        this.balance = this.balance - amount;
+    }
 
-    public void deposit(double amount) { }
+    public void deposit(double amount) {
+        if (this.closed) return; //error trapping for closed account
+        this.balance = this.balance + amount;
+    }
+
+    public double getBalance() {
+        return this.balance;
+    }
 
     public abstract double monthlyInterest(); //return the monthly interest
 
