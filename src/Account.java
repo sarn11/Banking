@@ -56,6 +56,18 @@ public abstract class Account {
     }
 
     /**
+     * Method to close an account.
+     * @return "account is already closed" if that's the case, and "account closed" if it hasn't
+     * already previously been closed.
+     */
+    public String closeAccount() {
+        if (this.closed) return "Account is already closed.";
+        this.closed = true;
+        this.balance = 0;
+        return "Account closed.";
+    }
+
+    /**
      * abstract method for monthly interest
      * @return the interest as a double.
      */

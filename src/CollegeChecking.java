@@ -1,24 +1,21 @@
 /**
- * A subclass of Account, this class defines the checking account.
+ * A subclass of Account, defining the college checking account.
  * @author Tyler Sarno
  */
-public class Checking extends Account{
+public class CollegeChecking extends Checking {
+    protected int campus;
 
     /**
-     * Constructor method for a checking account.
+     * Constructor for CollegeChecking.
      * @param holder the owner of the account.
-     * @param deposit the initial deposit for the account.
+     * @param deposit the initial deposit.
+     * @param campus the rutgers campus student is located on.
      */
-    public Checking (Profile holder, Double deposit) {
+    public CollegeChecking(Profile holder, Double deposit, int campus){
         this.holder = holder;
         this.balance = deposit;
+        this.campus = campus;
         this.closed = false;
-    }
-
-    /**
-     * parameterless constructor for Checking.
-     */
-    public Checking() {
     }
 
     /**
@@ -28,18 +25,16 @@ public class Checking extends Account{
     @Override
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
-        return this.balance * .01;
+        return this.balance * .025;
     }
 
     /**
-     * Check to see if you will receive a service fee (based on your current balance).
+     * Check to see if you will receive a service fee.
      * @return return the monthly fee.
      */
     @Override
     public double fee() {
-        if (this.closed) return -1; //closed account
-        if (this.balance < 1000) return 25.0;
-        else return 0;
+        return 0;
     }
 
     /**
@@ -48,6 +43,7 @@ public class Checking extends Account{
      */
     @Override
     public String getType() {
-        return "Checking";
+        return "College Checking";
     }
+
 }
