@@ -147,10 +147,10 @@ public class Date implements Comparable<Date> {
 //        Date rando = new Date("21/21/2050");
 //        System.out.println(rando.isValid());
 
-        Profile x1 = new Profile("Tyler", "Sarno", "02/22/1990");
+        Profile x1 = new Profile("Tyler", "Sarno", new Date ("02/22/1990"));
 //        System.out.println(x1);
-        Profile x2 = new Profile("Aum", "Pathak", "6/13/1989");
-        Profile x3 = new Profile("Tyler", "Sarno", "02/22/1990");
+        Profile x2 = new Profile("Aum", "Pathak", new Date ("6/13/1989"));
+        Profile x3 = new Profile("Tyler", "Sarno", new Date ("02/22/1990"));
 //        System.out.println(x1.equals(x2));
 //        System.out.println(x2);
 //        System.out.println(x1.equals(x3));

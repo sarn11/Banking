@@ -14,10 +14,10 @@ public class Profile {
     @param dob the date of birth of the customer in string form, converted
     to a date object within the constructor.
      */
-    public Profile (String fname, String lname, String dob){
+    public Profile (String fname, String lname, Date dob){
         this.fname = fname;
         this.lname = lname;
-        this.dob = new Date(dob);
+        this.dob = dob;
     }
 
     /**
