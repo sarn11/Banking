@@ -1,24 +1,25 @@
 /**
- * A subclass of Account, this class defines the checking account.
+ * A subclass of Account, this class defines the Savings account.
  * @author Aum Pathak, Tyler Sarno
  */
-public class Checking extends Account{
-
+public class Savings extends Account{
+    private int loyal;
     /**
-     * Constructor method for a checking account.
+     * Constructor method for a Savings account.
      * @param holder the owner of the account.
      * @param deposit the initial deposit for the account.
      */
-    public Checking (Profile holder, Double deposit) {
+    public Savings (Profile holder, Double deposit, int loyal) {
         this.holder = holder;
         this.balance = deposit;
         this.closed = false;
+        this.loyal = loyal;
     }
 
     /**
-     * parameterless constructor for Checking.
+     * parameterless constructor for Savings.
      */
-    public Checking() {
+    public Savings() {
     }
 
     /**
@@ -27,7 +28,8 @@ public class Checking extends Account{
      */
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
-        return this.balance * (.001/12);
+        if (loyal == 0) return this.balance * (.003/12);
+        return this.balance * (.0045/12);
     }
 
     /**
@@ -36,7 +38,7 @@ public class Checking extends Account{
      */
     public double fee() {
         if (this.closed) return -1; //closed account
-        if (this.balance < 1000) return 25.0;
+        if (this.balance < 300) return 6.0;
         else return 0;
     }
 
@@ -45,6 +47,7 @@ public class Checking extends Account{
      * @return the bank account type as a string.
      */
     public String getType() {
-        return "Checking";
+        return "Savings";
     }
+
 }

@@ -1,24 +1,23 @@
 /**
- * A subclass of Account, this class defines the checking account.
+ * A subclass of Savings, defining the Money Market account.
  * @author Aum Pathak, Tyler Sarno
  */
-public class Checking extends Account{
-
+public class MoneyMarket extends Savings{
+    private int withdraws;
     /**
-     * Constructor method for a checking account.
+     * Constructor method for a MoneyMarket account.
      * @param holder the owner of the account.
      * @param deposit the initial deposit for the account.
      */
-    public Checking (Profile holder, Double deposit) {
+    public MoneyMarket (Profile holder, Double deposit) {
         this.holder = holder;
         this.balance = deposit;
         this.closed = false;
+        this.withdraws = 0;
     }
 
-    /**
-     * parameterless constructor for Checking.
-     */
-    public Checking() {
+    public void incrementWithdraws(){
+        this.withdraws++;
     }
 
     /**
@@ -27,7 +26,8 @@ public class Checking extends Account{
      */
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
-        return this.balance * (.001/12);
+        if (this.balance < 2500) return this.balance * (.008/12);
+        return this.balance * (.0095/12);
     }
 
     /**
@@ -36,7 +36,8 @@ public class Checking extends Account{
      */
     public double fee() {
         if (this.closed) return -1; //closed account
-        if (this.balance < 1000) return 25.0;
+        if (this.balance < 2500) return 10.0;
+        else if (this.withdraws > 3) return 10.0;
         else return 0;
     }
 
@@ -45,6 +46,7 @@ public class Checking extends Account{
      * @return the bank account type as a string.
      */
     public String getType() {
-        return "Checking";
+        return "MoneyMarket";
     }
+
 }

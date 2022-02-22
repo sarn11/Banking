@@ -1,6 +1,6 @@
 /**
  * The superclass of all types of bank accounts.
- * @author Tyler Sarno.
+ * @author Aum Pathak, Tyler Sarno
  */
 public abstract class Account {
     protected Profile holder;
