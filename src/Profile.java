@@ -1,6 +1,6 @@
 /**
  * This class defines the profile for a banking customer.
- * @author Tyler Sarno
+ * @author Aum Pathak, Tyler Sarno
  */
 public class Profile {
     private String fname;

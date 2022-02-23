@@ -3,7 +3,6 @@ import java.util.StringTokenizer;
 
 /**
  * This class defines the date object, as well as methods to check its validity, etc.
- *
  * @author Aum Pathak, Tyler Sarno
  */
 public class Date implements Comparable<Date> {
