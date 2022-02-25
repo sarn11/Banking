@@ -16,6 +16,16 @@ public class MoneyMarket extends Savings{
         this.withdraws = 0;
     }
 
+    public int getWithdraws() {
+        return withdraws;
+    }
+
+    @Override
+    public String getLoyal() {
+        if(this.balance >= 2500) return ":: loyal";
+        return "";
+    }
+
     public void incrementWithdraws(){
         this.withdraws++;
     }
@@ -46,7 +56,7 @@ public class MoneyMarket extends Savings{
      * @return the bank account type as a string.
      */
     public String getType() {
-        return "MoneyMarket";
+        return "Money Market Savings";
     }
 
 }

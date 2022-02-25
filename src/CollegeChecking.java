@@ -3,7 +3,22 @@
  * @author Aum Pathak, Tyler Sarno
  */
 public class CollegeChecking extends Checking {
-    protected int campus;
+    protected enum Campus{
+        NEW_BRUNSWICK,
+        NEWARK,
+        CAMDEN
+    }
+
+    protected Campus campus;
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public String getClosed(){
+        if (this.closed) return "::CLOSED";
+        return "";
+    }
 
     /**
      * Constructor for CollegeChecking.
@@ -14,7 +29,7 @@ public class CollegeChecking extends Checking {
     public CollegeChecking(Profile holder, Double deposit, int campus){
         this.holder = holder;
         this.balance = deposit;
-        this.campus = campus;
+        this.campus = Campus.values()[campus];
         this.closed = false;
     }
 

@@ -26,7 +26,31 @@ public abstract class Account {
      */
     @Override
     public String toString() {
-        return this.getType() + "::" + this.holder.toString() + "::" + "Balance " + this.getBalance();
+        // If account type is MoneyMarket
+        if (this.getType().equals("Money Market Savings")){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + ((MoneyMarket)this).getLoyal() + "::" + ((MoneyMarket)this).getWithdraws();
+        }
+        // If account type is MoneyMarket AND it is closed
+        if (this.getType().equals("Money Market Savings") && this.closed){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED" + "::" + ((MoneyMarket)this).getWithdraws();
+        }
+        // If account type is CollegeChecking
+        if(this.getType().equals("College Checking")){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + ((CollegeChecking)this).getClosed() + "::" + ((CollegeChecking)this).getCampus().toString();
+        }
+        // If account type is Savings
+        if (this.getType().equals("Savings")){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + ((Savings)this).getLoyal();
+        }
+        // If account type is Savings AND it's closed
+        if (this.getType().equals("Savings") && this.closed){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED";
+        }
+        // If account type is Checking and it's closed
+        if (this.getType().equals("Checking") && this.closed){
+            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED";
+        }
+        return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance();
     }
 
     /**
@@ -53,18 +77,6 @@ public abstract class Account {
      */
     public double getBalance() {
         return this.balance;
-    }
-
-    /**
-     * Method to close an account.
-     * @return "account is already closed" if that's the case, and "account closed" if it hasn't
-     * already previously been closed.
-     */
-    public String closeAccount() {
-        if (this.closed) return "Account is already closed.";
-        this.closed = true;
-        this.balance = 0;
-        return "Account closed.";
     }
 
     /**

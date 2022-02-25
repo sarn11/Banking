@@ -16,6 +16,15 @@ public class Savings extends Account{
         this.loyal = loyal;
     }
 
+    public void setLoyal(int loyal) {
+        this.loyal = loyal;
+    }
+
+    public String getLoyal() {
+        if(this.loyal == 1) return "loyal";
+        return "";
+    }
+
     /**
      * parameterless constructor for Savings.
      */
