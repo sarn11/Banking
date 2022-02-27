@@ -150,26 +150,32 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
+        System.out.println("*list of accounts in the database*");
         for (int i = 0; i < numAcct; i++){
             System.out.println(accounts[i].toString());
         }
+        System.out.println("*end of list*");
     }
 
     /**
      * method that sorts the database for printing (uses insertion sort).
      */
-    private void sortDatabase() {
+    private Account[] sortDatabase() {
+        Account[] tempSorted = new Account[numAcct];
+        for (int i = 0; i < numAcct; i++) {
+            tempSorted[i] = accounts[i];
+        }
 
         for (int i = 1; i < numAcct; i++) {
-
-            Account temp = accounts[i];
+            Account temp = tempSorted[i];
             int j = i - 1;
-            while (j >= 0 && accounts[j].getType().compareTo(temp.getType()) > 0) {
-                accounts[j + 1] = accounts[j];
+            while (j >= 0 && tempSorted[j].getType().compareTo(temp.getType()) > 0) {
+                tempSorted[j + 1] = tempSorted[j];
                 j--;
             }
-            accounts[j + 1] = temp;
+            tempSorted[j + 1] = temp;
         }
+        return tempSorted;
     }
 
     /**
@@ -180,9 +186,13 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
+        System.out.println("*list of accounts by account type*");
 
-        sortDatabase();
-        print();
+        Account[] temp = sortDatabase();
+        for (int i = 0; i < numAcct; i++){
+            System.out.println(temp[i].toString());
+        }
+        System.out.println("*end of list*");
     }
 
     public void printFeeAndInterest() {
@@ -190,7 +200,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-
+        System.out.println("*list of accounts with fees and monthly interest*");
         DecimalFormat fmt = new DecimalFormat("###,##0.00");
         String fee;
         String monthlyInt;
@@ -200,12 +210,14 @@ public class AccountDatabase {
             monthlyInt = fmt.format((accounts[i].monthlyInterest()));
             System.out.println(accounts[i].toString() + "::" + "fee $" + fee + "::" + "monthly interest $" + monthlyInt);
         }
+        System.out.println("*end of list*");
     }
 
     /**
      * Update the balance of all the accounts in the database (that aren't closed).
      */
     public void printUpdatedBalances() {
+        if (numAcct > 0) System.out.println("*list of accounts with updated balance*");
 
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].closed) continue;
@@ -215,6 +227,9 @@ public class AccountDatabase {
                 ((MoneyMarket)accounts[i]).setLoyal(0);
             }
         }
-        this.print();
+        for (int i = 0; i < numAcct; i++){
+            System.out.println(accounts[i].toString());
+        }
+        System.out.println("*end of list*");
     }
 }

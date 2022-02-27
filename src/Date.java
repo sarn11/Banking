@@ -183,7 +183,7 @@ public class Date implements Comparable<Date> {
         //System.out.println(c1.equals(c3));
 
         System.out.println(validFormat("02/22/1990"));
-/*
+
         AccountDatabase db = new AccountDatabase();
         db.open(s2);
         db.open(c2);
@@ -202,7 +202,7 @@ public class Date implements Comparable<Date> {
 
         System.out.println();
         db.printFeeAndInterest();
-*/
+
 
 
 

@@ -25,6 +25,12 @@ public class BankTeller {
         return -1;
     }
 
+    /**
+     * creates a money market savings account.
+     * @param command the specific command.
+     * @param holder the account holder.
+     * @param bal the account balance/deposit/withdrawal.
+     */
     public void createMM(String command, Profile holder, double bal) {
 
         if (command.equals("C")) {
@@ -51,11 +57,11 @@ public class BankTeller {
         }
         if (command.equals("W")) {
             MoneyMarket acc = new MoneyMarket(holder, bal);
-            if (acc.balance <= 0) {
-                System.out.println("Withdraw - amount cannot be 0 or negative.");
+            boolean b = db.withdraw(acc);
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Money Market is not in the database.");
                 return;
             }
-            boolean b = db.withdraw(acc);
             if (isReopen(acc) == -2 || !b) {
                 System.out.println("Withdraw - insufficient funds.");
                 return;
@@ -82,6 +88,179 @@ public class BankTeller {
         }
     }
 
+    /**
+     * creates a checking account.
+     * @param command the specific command.
+     * @param holder the account holder.
+     * @param bal the account balance/deposit/withdrawal.
+     */
+    public void createC(String command, Profile holder, double bal) {
+        if (command.equals("C")) {
+            Checking acc = new Checking(holder, 0.0);
+            if (isReopen(acc) == -2) System.out.println("Account is closed already.");
+            if (isReopen(acc) == -1) System.out.println(holder + " Checking is not in the database.");
+            if (isReopen(acc) >= 0) {
+                System.out.println("Account closed.");
+                db.close(acc);
+            }
+        }
+        Checking acc = new Checking(holder, bal);
+        if (command.equals("D")) {
+            //Checking acc = new Checking(holder, bal);
+            if (isReopen(acc) == -2) {
+                System.out.println("Cannot deposit into a closed account.");
+                return;
+            }
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Checking is not in the database.");
+                return;
+            }
+            db.deposit(acc);
+            System.out.println("Deposit - balance updated.");
+        }
+        if (command.equals("W")) {
+            boolean b = db.withdraw(acc);
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Checking is not in the database.");
+                return;
+            }
+            if (isReopen(acc) == -2 || !b) {
+                System.out.println("Withdraw - insufficient funds.");
+                return;
+            }
+            System.out.println("Withdraw - balance updated.");
+        }
+
+        if (command.equals("O")){
+            if (isReopen(acc) == -2) {
+                System.out.println("Account reopened.");
+            }
+            else if(isReopen(acc) >= 0) {
+                System.out.println(holder + " same account(type) is in the database.");
+                return;
+            }
+            else System.out.println("Account opened");
+            db.open(acc);
+        }
+    }
+
+    /**
+     * creates a college checking account.
+     * @param campus the campus code.
+     * @param command the specific command.
+     * @param holder the account holder
+     * @param bal the account balance/deposit/withdrawal.
+     */
+    public void createCC (int campus, String command, Profile holder, double bal) {
+        if (command.equals("C")) {
+            CollegeChecking acc = new CollegeChecking(holder, 0.0, 0);
+            if (isReopen(acc) == -2) System.out.println("Account is closed already.");
+            if (isReopen(acc) == -1) System.out.println(holder + " Checking is not in the database.");
+            if (isReopen(acc) >= 0) {
+                System.out.println("Account closed.");
+                db.close(acc);
+            }
+        }
+        CollegeChecking acc = new CollegeChecking(holder, bal, campus);
+        if (command.equals("D")) {
+            if (isReopen(acc) == -2) {
+                System.out.println("Cannot deposit into a closed account.");
+                return;
+            }
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Checking is not in the database.");
+                return;
+            }
+            db.deposit(acc);
+            System.out.println("Deposit - balance updated.");
+        }
+        if (command.equals("W")) {
+            boolean b = db.withdraw(acc);
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " College Checking is not in the database.");
+                return;
+            }
+            if (isReopen(acc) == -2 || !b) {
+                System.out.println("Withdraw - insufficient funds.");
+                return;
+            }
+            System.out.println("Withdraw - balance updated.");
+        }
+
+        if (command.equals("O")){
+            if (isReopen(acc) == -2) {
+                System.out.println("Account reopened.");
+            }
+            else if(isReopen(acc) >= 0) {
+                System.out.println(holder + " same account(type) is in the database.");
+                return;
+            }
+            else System.out.println("Account opened");
+            db.open(acc);
+        }
+    }
+
+    /**
+     * method to create a savings account
+     * @param loyal loyalty code.
+     * @param command specific command.
+     * @param holder holder of the account.
+     * @param bal account balance/deposit/withdrawal.
+     */
+    public void createS(int loyal, String command, Profile holder, double bal) {
+        if (command.equals("C")) {
+            Savings acc = new Savings(holder, 0.0, 0);
+            if (isReopen(acc) == -2) System.out.println("Account is closed already.");
+            if (isReopen(acc) == -1) System.out.println(holder + " Savings is not in the database.");
+            if (isReopen(acc) >= 0) {
+                System.out.println("Account closed.");
+                db.close(acc);
+            }
+        }
+        Savings acc = new Savings(holder, bal, loyal);
+        if (command.equals("D")) {
+            if (isReopen(acc) == -2) {
+                System.out.println("Cannot deposit into a closed account.");
+                return;
+            }
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Checking is not in the database.");
+                return;
+            }
+            db.deposit(acc);
+            System.out.println("Deposit - balance updated.");
+        }
+        if (command.equals("W")) {
+            boolean b = db.withdraw(acc);
+            if (isReopen(acc) == -1) {
+                System.out.println(holder + " Savings is not in the database.");
+                return;
+            }
+            if (isReopen(acc) == -2 || !b) {
+                System.out.println("Withdraw - insufficient funds.");
+                return;
+            }
+            System.out.println("Withdraw - balance updated.");
+        }
+
+        if (command.equals("O")){
+            if (isReopen(acc) == -2) {
+                System.out.println("Account reopened.");
+            }
+            else if(isReopen(acc) >= 0) {
+                System.out.println(holder + " same account(type) is in the database.");
+                return;
+            }
+            else System.out.println("Account opened");
+            db.open(acc);
+        }
+    }
+
+    /**
+     * Method that gathers all the necessary data and calls the specific method to create an account.
+     * @param input the input from the user
+     * @param command the command for what action to take.
+     */
     public void createAccount(StringTokenizer input, String command) {
         if (command.equals("C") && input.countTokens() < 4) {
             System.out.println("Missing data for closing an account.");
@@ -125,14 +304,43 @@ public class BankTeller {
             System.out.println("Deposit - amount cannot be 0 or negative.");
             return;
         }
+        if (bal <= 0 && command.equals("W")) {
+            System.out.println("Withdraw - amount cannot be 0 or negative.");
+            return;
+        }
         Profile holder = new Profile(fname, lname, dob);
-//        if (type.equals("C")) {
-//            Checking acc = new Checking(holder, bal);
-//            db.open(acc);
-//        }
+
         if (type.equals("MM")) createMM(command, holder, bal);
-
-
+        if (type.equals("C")) createC(command, holder, bal);
+        int campus = -1; int loyal = -1;
+        if (type.equals("CC")) {
+            if (input.hasMoreTokens()) {
+                try {
+                    campus = Integer.parseInt(input.nextToken());
+                }
+                catch(NumberFormatException ignored) {
+                }
+            }
+            if ((campus < 0 || campus > 2) && command.equals("O")) {
+                System.out.println("Invalid campus code.");
+                return;
+            }
+        }
+        if (type.equals("CC")) createCC(campus, command, holder, bal);
+        if (type.equals("S")) {
+            if (input.hasMoreTokens()) {
+                try {
+                    loyal = Integer.parseInt(input.nextToken());
+                }
+                catch(NumberFormatException ignored) {
+                }
+            }
+            if ((loyal < 0 || loyal > 1) && command.equals("O")) {
+                System.out.println("Invalid loyalty code.");
+                return;
+            }
+            createS(loyal, command, holder, bal);
+        }
     }
 
     public void run() {
