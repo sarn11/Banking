@@ -3,7 +3,8 @@
  * @author Aum Pathak, Tyler Sarno
  */
 public class Savings extends Account{
-    private int loyal;
+    protected int loyal;
+
     /**
      * Constructor method for a Savings account.
      * @param holder the owner of the account.
@@ -14,6 +15,18 @@ public class Savings extends Account{
         this.balance = deposit;
         this.closed = false;
         this.loyal = loyal;
+    }
+
+    /**
+     * Convert account to a string with all its info.
+     * @return returns the string
+     */
+    @Override
+    public String toString() {
+        if (this.loyal == 1){
+            return super.toString() + "::" + this.getLoyal();
+        }
+        return super.toString();
     }
 
     public void setLoyal(int loyal) {
@@ -36,9 +49,10 @@ public class Savings extends Account{
      * @return the interest as a double.
      */
     public double monthlyInterest() {
+
         if (this.closed) return -1; //closed account
         if (loyal == 0) return this.balance * (.003/12);
-        return this.balance * (.0045/12);
+        return (this.balance * (.0045/12));
     }
 
     /**

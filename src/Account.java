@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 /**
  * The superclass of all types of bank accounts.
  * @author Aum Pathak, Tyler Sarno
@@ -15,7 +16,9 @@ public abstract class Account {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
-            return this.toString().equals(obj.toString());
+            String s1 = this.holder.toString() + this.getType();
+            String s2 = ((Account) obj).holder.toString() + ((Account) obj).getType();
+            return s1.equals(s2);
         }
         return false;
     }
@@ -26,31 +29,22 @@ public abstract class Account {
      */
     @Override
     public String toString() {
-        // If account type is MoneyMarket
-        if (this.getType().equals("Money Market Savings")){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + ((MoneyMarket)this).getLoyal() + "::" + ((MoneyMarket)this).getWithdraws();
-        }
-        // If account type is MoneyMarket AND it is closed
-        if (this.getType().equals("Money Market Savings") && this.closed){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED" + "::" + ((MoneyMarket)this).getWithdraws();
-        }
-        // If account type is CollegeChecking
-        if(this.getType().equals("College Checking")){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + ((CollegeChecking)this).getClosed() + "::" + ((CollegeChecking)this).getCampus().toString();
-        }
-        // If account type is Savings
-        if (this.getType().equals("Savings")){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + ((Savings)this).getLoyal();
-        }
-        // If account type is Savings AND it's closed
-        if (this.getType().equals("Savings") && this.closed){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED";
-        }
-        // If account type is Checking and it's closed
-        if (this.getType().equals("Checking") && this.closed){
-            return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance() + "::" + "CLOSED";
-        }
-        return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + this.getBalance();
+        DecimalFormat fmt = new DecimalFormat("###,##0.00");
+        String balance = fmt.format(this.getBalance());
+        return this.getType() + "::" + this.holder.toString() + "::" + "Balance $" + balance
+                + getClosed();
+    }
+
+    /**
+     * Method to close an account.
+     * @return "account is already closed" if that's the case, and "account closed" if it hasn't
+     * already previously been closed.
+     */
+    public String closeAccount() {
+        if (this.closed) return "Account is already closed.";
+        this.closed = true;
+        this.balance = 0;
+        return "Account closed.";
     }
 
     /**
@@ -77,6 +71,15 @@ public abstract class Account {
      */
     public double getBalance() {
         return this.balance;
+    }
+
+    /**
+     * get closed status of account.
+     * @return string stating if the account is closed.
+     */
+    public String getClosed(){
+        if (this.closed) return "::CLOSED";
+        return "";
     }
 
     /**

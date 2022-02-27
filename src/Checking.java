@@ -22,6 +22,23 @@ public class Checking extends Account{
     }
 
     /**
+     * Check if two checking accounts are equal (cannot have both a college checking and a normal checking).
+     * @param obj takes in a generic obj type
+     * @return return true if the two accounts are the same.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Account) {
+            if (((Account) obj).getType() != "Checking" || ((Account) obj).getType() != "College Checking") return false;
+            String s1 = this.holder.toString();
+            String s2 = ((Account) obj).holder.toString();
+            return s1.equals(s2);
+        }
+        return false;
+    }
+
+
+    /**
      * Calculate the monthly interest you will receive this month with the current balance.
      * @return the interest as a double.
      */
