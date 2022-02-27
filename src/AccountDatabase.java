@@ -217,7 +217,11 @@ public class AccountDatabase {
      * Update the balance of all the accounts in the database (that aren't closed).
      */
     public void printUpdatedBalances() {
-        if (numAcct > 0) System.out.println("*list of accounts with updated balance*");
+        if (numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
+        System.out.println("*list of accounts with updated balance*");
 
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].closed) continue;

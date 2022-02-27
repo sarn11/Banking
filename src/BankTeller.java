@@ -19,7 +19,10 @@ public class BankTeller {
         if(numAcct == 0) return -1;
         Account[] accounts = db.getAccounts();
         for (int i = 0; i < numAcct; i++) {
-            if (accounts[i].equals(account) && accounts[i].closed) return -2;
+            if (accounts[i].equals(account) && accounts[i].closed &&
+                accounts[i].getType().equals(account.getType())) return -2;
+            if (accounts[i].equals(account) && accounts[i].getType().equals(account.getType())) return -4;
+            if (accounts[i].equals(account) && !accounts[i].getType().equals(account.getType())) return -3;
             if (accounts[i].equals(account)) return i;
         }
         return -1;
@@ -111,7 +114,7 @@ public class BankTeller {
                 System.out.println("Cannot deposit into a closed account.");
                 return;
             }
-            if (isReopen(acc) == -1) {
+            if (isReopen(acc) == -1 || isReopen(acc) == -3) {
                 System.out.println(holder + " Checking is not in the database.");
                 return;
             }
@@ -167,8 +170,8 @@ public class BankTeller {
                 System.out.println("Cannot deposit into a closed account.");
                 return;
             }
-            if (isReopen(acc) == -1) {
-                System.out.println(holder + " Checking is not in the database.");
+            if (isReopen(acc) == -1 || isReopen(acc) == -3) {
+                System.out.println(holder + " College Checking is not in the database.");
                 return;
             }
             db.deposit(acc);
@@ -191,7 +194,7 @@ public class BankTeller {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
             }
-            else if(isReopen(acc) >= 0) {
+            else if(isReopen(acc) >= 0 || isReopen(acc) == -3) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
             }
