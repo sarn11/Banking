@@ -48,6 +48,7 @@ public class MoneyMarket extends Savings{
      */
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
+        if (this.balance < 0) return 0;
         if (this.balance < 2500) return this.balance * (.008/12);
         return this.balance * (.0095/12);
     }

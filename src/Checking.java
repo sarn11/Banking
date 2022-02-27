@@ -47,6 +47,7 @@ public class Checking extends Account{
      */
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
+        if (this.balance < 0) return 0;
         return this.balance * (.001/12);
     }
 

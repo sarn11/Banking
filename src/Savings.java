@@ -61,6 +61,7 @@ public class Savings extends Account{
      */
     public double fee() {
         if (this.closed) return -1; //closed account
+        if (this.balance < 0) return 0;
         if (this.balance < 300) return 6.0;
         else return 0;
     }

@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 /**
@@ -25,6 +26,16 @@ public class BankTeller {
     }
 
     public void createMM(String command, Profile holder, double bal) {
+
+        if (command.equals("C")) {
+            MoneyMarket acc = new MoneyMarket(holder, 0.0);
+            if (isReopen(acc) == -2) System.out.println("Account is closed already.");
+            if (isReopen(acc) == -1) System.out.println(holder + " Money Market is not in the database.");
+            if (isReopen(acc) >= 0) {
+                System.out.println("Account closed.");
+                db.close(acc);
+            }
+        }
         if (command.equals("D")) {
             MoneyMarket acc = new MoneyMarket(holder, bal);
             if (isReopen(acc) == -2) {
@@ -51,15 +62,7 @@ public class BankTeller {
             }
             System.out.println("Withdraw - balance updated.");
         }
-        if (command.equals("C")) {
-            MoneyMarket acc = new MoneyMarket(holder, 0.0);
-            if (isReopen(acc) == -2) System.out.println("Account is closed already.");
-            if (isReopen(acc) == -1) System.out.println(holder + " Money Market is not in the database.");
-            if (isReopen(acc) >= 0) {
-                System.out.println("Account closed.");
-                db.close(acc);
-            }
-        }
+
         if (command.equals("O")){
             if (bal < 2500) {
                 System.out.println("Minimum of $2500 to open a MoneyMarket account.");
@@ -77,12 +80,15 @@ public class BankTeller {
                 db.open(acc);
             }
         }
-
     }
 
     public void createAccount(StringTokenizer input, String command) {
+        if (command.equals("C") && input.countTokens() < 4) {
+            System.out.println("Missing data for closing an account.");
+            return;
+        }
 
-        if (input.countTokens() < 5) {
+        else if (!command.equals("C") && input.countTokens() < 5) {
             System.out.println("Missing data for opening an account.");
             return;
         }
@@ -92,12 +98,16 @@ public class BankTeller {
         String birth = input.nextToken();
         double bal = 0;
 
-        try {
-            bal = Double.parseDouble(input.nextToken());
+        if (!command.equals("C")) {
+            try {
+                bal = Double.parseDouble(input.nextToken());
+            }
+            catch (NumberFormatException e){
+                System.out.println("Invalid balance.");
+                return;
+            }
         }
-        catch (NumberFormatException e){
-            System.out.println("Invalid balance.");
-        }
+
         if (!Date.validFormat(birth)) {
             System.out.println("Date of birth invalid.");
             return;
@@ -129,7 +139,15 @@ public class BankTeller {
         System.out.println("Bank Teller is running.");
         Scanner sc = new Scanner(System.in);
         while (true) {
-            String read = sc.nextLine();
+            String read;
+            try {
+                read = sc.nextLine();
+            }
+            catch (NoSuchElementException e) {
+                System.out.println("Invalid command!");
+                break;
+            }
+
             StringTokenizer input = new StringTokenizer(read, "\t ");
             //handles no such element
             if (!input.hasMoreTokens()) {

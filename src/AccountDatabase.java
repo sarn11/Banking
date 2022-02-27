@@ -69,6 +69,9 @@ public class AccountDatabase {
         if (accIndex >= 0 && accounts[accIndex].closed) {
             accounts[accIndex].closed = false;
             accounts[accIndex].balance = accounts[accIndex].balance + account.balance;
+            if (accounts[accIndex].getType().equals("Money Market Savings") && accounts[accIndex].balance > 2500){
+                ((MoneyMarket)accounts[accIndex]).setLoyal(1);
+            }
             return true; //acc needs to be reopened (handle in the console).
         }
 
@@ -91,6 +94,9 @@ public class AccountDatabase {
         if(accounts[index].getType().equals("Savings")){
             ((Savings)accounts[index]).setLoyal(0);
         }
+        if (accounts[index].getType().equals("Money Market Savings")) {
+            ((MoneyMarket)accounts[index]).setLoyal(0);
+        }
         return true;
     }
 
@@ -107,9 +113,10 @@ public class AccountDatabase {
         if (index >= 0 && accounts[index].closed) {
             System.out.println(account.holder.toString() + " " + account.getType() + " has been closed, deposit failed.");
         }
-
         accounts[index].deposit(account.balance);
-        System.out.println("Deposit - balance updated.");
+        if (accounts[index].getType().equals("Money Market Savings")) {
+            ((MoneyMarket) accounts[index]).setLoyal(1);
+        }
     }
 
     /**
