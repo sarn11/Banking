@@ -20,7 +20,7 @@ public class AccountDatabase {
      * @param account the account you are searching for.
      * @return returns -1 if no duplicate has been found, returns the index of the dupe account otherwise.
      */
-    private int find(Account account) {
+    public int find(Account account) {
         if(numAcct == 0) return -1;
 
         for (int i = 0; i < numAcct; i++) {
@@ -48,6 +48,7 @@ public class AccountDatabase {
      */
     public boolean open(Account account) {
         int accIndex = find(account);
+        System.out.println(accIndex);
         if (accIndex >= 0 && !accounts[accIndex].closed) return false; //acc already exits and is not closed.
         if (accIndex >= 0 && accounts[accIndex].closed) return false; //acc needs to be reopened (handle in the console).
 
@@ -63,11 +64,12 @@ public class AccountDatabase {
      * @return false if no account present. Else, true once the account is closed
      */
     public boolean close(Account account) {
-        if (find(account) == -1) return false;
-        account.closed = true;
-        account.balance = 0;
-        if(account.getType().equals("Savings")){
-            ((Savings)account).setLoyal(0);
+        int index = find(account);
+        if (index == -1) return false;
+        accounts[index].closed = true;
+        accounts[index].balance = 0;
+        if(accounts[index].getType().equals("Savings")){
+            ((Savings)accounts[index]).setLoyal(0);
         }
         return true;
     }
@@ -132,7 +134,6 @@ public class AccountDatabase {
 
             Account temp = accounts[i];
             int j = i - 1;
-
             while (j >= 0 && accounts[j].getType().compareTo(temp.getType()) > 0) {
                 accounts[j + 1] = accounts[j];
                 j--;
@@ -152,15 +153,32 @@ public class AccountDatabase {
     }
 
     public void printFeeAndInterest() {
+        if(numAcct == 0) System.out.println("Account Database is empty!");
+
         DecimalFormat fmt = new DecimalFormat("###,##0.00");
         String fee;
         String monthlyInt;
 
-        if(numAcct == 0) System.out.println("Account Database is empty!");
         for (int i = 0; i < numAcct; i++){
             fee = fmt.format(accounts[i].fee());
             monthlyInt = fmt.format((accounts[i].monthlyInterest()));
             System.out.println(accounts[i].toString() + "::" + "fee $" + fee + "::" + "monthly interest $" + monthlyInt);
         }
+    }
+
+    /**
+     * Update the balance of all the accounts in the database (that aren't closed).
+     */
+    public void printUpdatedBalances() {
+
+        for (int i = 0; i < numAcct; i++) {
+            if (accounts[i].closed) continue;
+            accounts[i].deposit(accounts[i].monthlyInterest());
+            accounts[i].balance = accounts[i].balance - accounts[i].fee();
+            if (accounts[i].getType().equals("Money Market Savings") && accounts[i].balance < 2500) {
+                ((MoneyMarket)accounts[i]).setLoyal(0);
+            }
+        }
+        this.print();
     }
 }

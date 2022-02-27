@@ -1,3 +1,4 @@
+import java.util.StringTokenizer;
 /**
  * This class defines the profile for a banking customer.
  * @author Aum Pathak, Tyler Sarno
@@ -17,6 +18,18 @@ public class Profile {
     public Profile (String fname, String lname, Date dob){
         this.fname = fname;
         this.lname = lname;
+        this.dob = dob;
+    }
+
+    /**
+     * constructor for profile that takes in full name as 1 string to save space.
+     * @param name full name of customer.
+     * @param dob date of birth of the customer.
+     */
+    public Profile (String name, Date dob) {
+        StringTokenizer str = new StringTokenizer(name, " ");
+        this.fname = str.nextToken();
+        this.lname = str.nextToken();
         this.dob = dob;
     }
 

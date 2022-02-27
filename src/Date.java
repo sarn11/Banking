@@ -1,6 +1,5 @@
 import java.util.Calendar;
 import java.util.StringTokenizer;
-import java.text.DecimalFormat;
 
 /**
  * This class defines the date object, as well as methods to check its validity, etc.
@@ -41,7 +40,7 @@ public class Date implements Comparable<Date> {
      */
     public Date(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
-        if (s.countTokens() != 3) throw new IllegalArgumentException();
+        if (s.countTokens() != 3) throw new IllegalArgumentException("invalid date");
         this.month = Integer.parseInt(s.nextToken());
         this.day = Integer.parseInt(s.nextToken());
         this.year = Integer.parseInt(s.nextToken());
@@ -149,7 +148,7 @@ public class Date implements Comparable<Date> {
 
         Profile x1 = new Profile("Tyler", "Sarno", new Date ("02/22/1990"));
 //        System.out.println(x1);
-        Profile x2 = new Profile("Aum", "Pathak", new Date ("6/13/1989"));
+        Profile x2 = new Profile("Aum", "Pathak", new Date ("6/20/1989"));
         Profile x3 = new Profile("Diana", "Sparks", new Date ("02/10/1990"));
 //        System.out.println(x1.equals(x2));
 //        System.out.println(x2);
