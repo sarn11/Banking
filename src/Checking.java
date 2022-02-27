@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * A subclass of Account, this class defines the checking account.
  * @author Aum Pathak, Tyler Sarno
@@ -20,6 +22,24 @@ public class Checking extends Account{
      */
     public Checking() {
     }
+
+    /**
+     * Check if two checking accounts are equal (cannot have both a college checking and a normal checking).
+     * @param obj takes in a generic obj type
+     * @return return true if the two accounts are the same.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Account) {
+            if (!Objects.equals(((Account) obj).getType(), "Checking") &&
+                    !Objects.equals(((Account) obj).getType(), "College Checking")) return false;
+            return this.holder.equals(((Account) obj).holder);
+
+
+        }
+        return false;
+    }
+
 
     /**
      * Calculate the monthly interest you will receive this month with the current balance.

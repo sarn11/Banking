@@ -3,7 +3,7 @@
  * @author Aum Pathak, Tyler Sarno
  */
 public class MoneyMarket extends Savings{
-    private int withdraws;
+    protected int withdrawals;
     /**
      * Constructor method for a MoneyMarket account.
      * @param holder the owner of the account.
@@ -13,11 +13,33 @@ public class MoneyMarket extends Savings{
         this.holder = holder;
         this.balance = deposit;
         this.closed = false;
-        this.withdraws = 0;
+        this.withdrawals = 0;
+        this.loyal = 1;
     }
 
-    public void incrementWithdraws(){
-        this.withdraws++;
+    public int getWithdraws() {
+        return withdrawals;
+    }
+
+    /**
+     * Convert account to a string with all its info.
+     * @return returns the string
+     */
+    @Override
+    public String toString() {
+        return super.toString() + "::" + "withdrawals:" + this.withdrawals;
+    }
+
+    /**
+     * withdraw function specific for MoneyMarket.
+     * @param amount the amount you want to withdraw.
+     */
+    @Override
+    public void withdraw(double amount) {
+        if (this.closed || this.balance < amount) return; //make sure to not increment withdraws if the withdrawal is invalid
+        super.withdraw(amount);
+        withdrawals++;
+        if (this.balance < 2500 || this.withdrawals > 3) this.setLoyal(0);
     }
 
     /**
@@ -37,7 +59,7 @@ public class MoneyMarket extends Savings{
     public double fee() {
         if (this.closed) return -1; //closed account
         if (this.balance < 2500) return 10.0;
-        else if (this.withdraws > 3) return 10.0;
+        else if (this.withdrawals > 3) return 10.0;
         else return 0;
     }
 
@@ -46,7 +68,7 @@ public class MoneyMarket extends Savings{
      * @return the bank account type as a string.
      */
     public String getType() {
-        return "MoneyMarket";
+        return "Money Market Savings";
     }
 
 }

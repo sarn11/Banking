@@ -1,3 +1,4 @@
+import java.util.StringTokenizer;
 /**
  * This class defines the profile for a banking customer.
  * @author Aum Pathak, Tyler Sarno
@@ -37,7 +38,7 @@ public class Profile {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Profile) {
-            return this.toString().equals(obj.toString());
+            return this.toString().equalsIgnoreCase(obj.toString());
         }
         return false;
     }

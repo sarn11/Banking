@@ -3,7 +3,13 @@
  * @author Aum Pathak, Tyler Sarno
  */
 public class CollegeChecking extends Checking {
-    protected int campus;
+
+
+    protected String campus;
+
+    public String getCampus() {
+        return campus;
+    }
 
     /**
      * Constructor for CollegeChecking.
@@ -14,8 +20,19 @@ public class CollegeChecking extends Checking {
     public CollegeChecking(Profile holder, Double deposit, int campus){
         this.holder = holder;
         this.balance = deposit;
-        this.campus = campus;
         this.closed = false;
+        if (campus == 0) this.campus = "New Brunswick";
+        else if(campus == 1) this.campus = "Newark";
+        else if(campus == 2) this.campus = "Camden";
+    }
+
+    /**
+     * Convert account to a string with all its info.
+     * @return returns the string
+     */
+    @Override
+    public String toString() {
+        return super.toString() + "::" + this.getCampus();
     }
 
     /**
@@ -24,7 +41,7 @@ public class CollegeChecking extends Checking {
      */
     public double monthlyInterest() {
         if (this.closed) return -1; //closed account
-        return this.balance * .025;
+        return this.balance * .0025/12;
     }
 
     /**

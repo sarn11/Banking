@@ -40,7 +40,7 @@ public class Date implements Comparable<Date> {
      */
     public Date(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
-        if (s.countTokens() != 3) throw new IllegalArgumentException();
+        if (s.countTokens() != 3) throw new IllegalArgumentException("invalid date");
         this.month = Integer.parseInt(s.nextToken());
         this.day = Integer.parseInt(s.nextToken());
         this.year = Integer.parseInt(s.nextToken());
@@ -102,6 +102,21 @@ public class Date implements Comparable<Date> {
         };
     }
 
+    public static boolean validFormat(String date) {
+        StringTokenizer s = new StringTokenizer(date, "/");
+        if (s.countTokens() != 3) return false;
+        int temp;
+        try {
+            temp = Integer.parseInt(s.nextToken());
+            temp = Integer.parseInt(s.nextToken());
+            temp = Integer.parseInt(s.nextToken());
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
     compareTo method for the Date object
     @param date the date you want to compare
@@ -148,16 +163,48 @@ public class Date implements Comparable<Date> {
 
         Profile x1 = new Profile("Tyler", "Sarno", new Date ("02/22/1990"));
 //        System.out.println(x1);
-        Profile x2 = new Profile("Aum", "Pathak", new Date ("6/13/1989"));
-        Profile x3 = new Profile("Tyler", "Sarno", new Date ("02/22/1990"));
+        Profile x2 = new Profile("Aum", "Pathak", new Date ("6/20/1989"));
+        Profile x3 = new Profile("Diana", "Sparks", new Date ("02/10/1990"));
+        Profile x4 = new Profile("tyler", "SArno", new Date("02/22/1990"));
 //        System.out.println(x1.equals(x2));
 //        System.out.println(x2);
 //        System.out.println(x1.equals(x3));
 
         Checking c1 = new Checking(x1,200.0);
-        Checking c2 = new Checking(x2, 300.0);
-        System.out.println(c1);
-        System.out.println(c1.equals(c2));
+        CollegeChecking c2 = new CollegeChecking(x2, 300.0, 2);
+        CollegeChecking c3 = new CollegeChecking(x4, 300.0, 0);
+        Savings s1 = new Savings (x1, 300.0, 0);
+        Savings s2 = new Savings (x2, 300.0, 1);
+        MoneyMarket m1 = new MoneyMarket(x1, 4000.0);
+        MoneyMarket m2 = new MoneyMarket(x1,4000.0);
+
+
+       // System.out.println(m1.equals(m2));
+        //System.out.println(c1.equals(c3));
+
+        System.out.println(validFormat("02/22/1990"));
+/*
+        AccountDatabase db = new AccountDatabase();
+        db.open(s2);
+        db.open(c2);
+        db.open(m1);
+        db.open(c3);
+        db.open(c1);
+        db.open(s1);
+
+        db.print();
+        System.out.println();
+        db.printByAccountType();
+        System.out.println();
+
+        db.withdraw(m2);
+        db.print();
+
+        System.out.println();
+        db.printFeeAndInterest();
+*/
+
+
 
     }
 }
