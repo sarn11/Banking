@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * A subclass of Account, this class defines the checking account.
  * @author Aum Pathak, Tyler Sarno
@@ -29,10 +31,11 @@ public class Checking extends Account{
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
-            if (((Account) obj).getType() != "Checking" || ((Account) obj).getType() != "College Checking") return false;
-            String s1 = this.holder.toString();
-            String s2 = ((Account) obj).holder.toString();
-            return s1.equals(s2);
+            if (!Objects.equals(((Account) obj).getType(), "Checking") &&
+                    !Objects.equals(((Account) obj).getType(), "College Checking")) return false;
+            return this.holder.equals(((Account) obj).holder);
+
+
         }
         return false;
     }

@@ -20,13 +20,29 @@ public class AccountDatabase {
      * @param account the account you are searching for.
      * @return returns -1 if no duplicate has been found, returns the index of the dupe account otherwise.
      */
-    public int find(Account account) {
+    private int find(Account account) {
         if(numAcct == 0) return -1;
 
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].equals(account)) return i;
         }
         return -1;
+    }
+
+    /**
+     * getter method for numAcct
+     * @return int (the number of accounts).
+     */
+    public int getNumAcct() {
+        return this.numAcct;
+    }
+
+    /**
+     * getter method for accounts.
+     * @return the accounts array.
+     */
+    public Account[] getAccounts() {
+        return this.accounts;
     }
 
     /**
@@ -48,9 +64,13 @@ public class AccountDatabase {
      */
     public boolean open(Account account) {
         int accIndex = find(account);
-        System.out.println(accIndex);
+
         if (accIndex >= 0 && !accounts[accIndex].closed) return false; //acc already exits and is not closed.
-        if (accIndex >= 0 && accounts[accIndex].closed) return false; //acc needs to be reopened (handle in the console).
+        if (accIndex >= 0 && accounts[accIndex].closed) {
+            accounts[accIndex].closed = false;
+            accounts[accIndex].balance = accounts[accIndex].balance + account.balance;
+            return true; //acc needs to be reopened (handle in the console).
+        }
 
         if (accounts.length == numAcct) this.grow();
         accounts[numAcct] = account; //numAcct SHOULD be the right index every time.
@@ -100,11 +120,11 @@ public class AccountDatabase {
     public boolean withdraw(Account account) {
         int index = find(account);
         if (index == -1) {
-            System.out.println(account.holder.toString() + " " + account.getType() + " is not in the database.");
+            //System.out.println(account.holder.toString() + " " + account.getType() + " is not in the database.");
             return false;
         }
         if (index >= 0 && accounts[index].closed) {
-            System.out.println(account.holder.toString() + " " + account.getType() + " has been closed, withdrawal failed.");
+           // System.out.println(account.holder.toString() + " " + account.getType() + " has been closed, withdrawal failed.");
             return false;
         }
 
@@ -119,7 +139,10 @@ public class AccountDatabase {
      * print all the accounts in the database.
      */
     public void print() {
-        if(numAcct == 0) System.out.println("Account Database is empty!");
+        if(numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
         for (int i = 0; i < numAcct; i++){
             System.out.println(accounts[i].toString());
         }
@@ -146,14 +169,20 @@ public class AccountDatabase {
      * print all the accounts in the database organized by the type.
      */
     public void printByAccountType() {
-        if(numAcct == 0) System.out.println("Account Database is empty!");
+        if(numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
 
         sortDatabase();
         print();
     }
 
     public void printFeeAndInterest() {
-        if(numAcct == 0) System.out.println("Account Database is empty!");
+        if(numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
 
         DecimalFormat fmt = new DecimalFormat("###,##0.00");
         String fee;

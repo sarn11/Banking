@@ -22,18 +22,6 @@ public class Profile {
     }
 
     /**
-     * constructor for profile that takes in full name as 1 string to save space.
-     * @param name full name of customer.
-     * @param dob date of birth of the customer.
-     */
-    public Profile (String name, Date dob) {
-        StringTokenizer str = new StringTokenizer(name, " ");
-        this.fname = str.nextToken();
-        this.lname = str.nextToken();
-        this.dob = dob;
-    }
-
-    /**
     convert profile to a string.
     @return a string of all the info about the profile.
      */
@@ -50,7 +38,7 @@ public class Profile {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Profile) {
-            return this.toString().equals(obj.toString());
+            return this.toString().equalsIgnoreCase(obj.toString());
         }
         return false;
     }
