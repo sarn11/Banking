@@ -1,26 +1,29 @@
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+
 /**
  * Bank Teller program to take info from the client through the console.
+ *
  * @author Tyler Sarno.
  */
 public class BankTeller {
-    Date today = new Date();
-    AccountDatabase db = new AccountDatabase();
+    private Date today = new Date();
+    private AccountDatabase db = new AccountDatabase();
 
     /**
      * Check if you are reopening an account.
+     *
      * @param account the account you are searching for.
      * @return returns -1 if no duplicate has been found, returns the index of the dupe account otherwise.
      */
     private int isReopen(Account account) {
         int numAcct = db.getNumAcct();
-        if(numAcct == 0) return -1;
+        if (numAcct == 0) return -1;
         Account[] accounts = db.getAccounts();
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].equals(account) && accounts[i].closed &&
-                accounts[i].getType().equals(account.getType())) return -2;
+                    accounts[i].getType().equals(account.getType())) return -2;
             if (accounts[i].equals(account) && !accounts[i].getType().equals(account.getType())) return -3;
             if (accounts[i].equals(account) && accounts[i].getType().equals(account.getType())) return -4;
         }
@@ -32,11 +35,12 @@ public class BankTeller {
 
     /**
      * creates a money market savings account.
+     *
      * @param command the specific command.
-     * @param holder the account holder.
-     * @param bal the account balance/deposit/withdrawal.
+     * @param holder  the account holder.
+     * @param bal     the account balance/deposit/withdrawal.
      */
-    public void createMM(String command, Profile holder, double bal) {
+    private void createMM(String command, Profile holder, double bal) {
 
         if (command.equals("C")) {
             MoneyMarket acc = new MoneyMarket(holder, 0.0);
@@ -74,20 +78,17 @@ public class BankTeller {
             System.out.println("Withdraw - balance updated.");
         }
 
-        if (command.equals("O")){
+        if (command.equals("O")) {
             if (bal < 2500) {
                 System.out.println("Minimum of $2500 to open a MoneyMarket account.");
-            }
-            else {
+            } else {
                 MoneyMarket acc = new MoneyMarket(holder, bal);
                 if (isReopen(acc) == -2) {
                     System.out.println("Account reopened.");
-                }
-                else if(isReopen(acc) == -4) {
+                } else if (isReopen(acc) == -4) {
                     System.out.println(holder + " same account(type) is in the database.");
                     return;
-                }
-                else System.out.println("Account opened");
+                } else System.out.println("Account opened");
                 db.open(acc);
             }
         }
@@ -95,11 +96,12 @@ public class BankTeller {
 
     /**
      * creates a checking account.
+     *
      * @param command the specific command.
-     * @param holder the account holder.
-     * @param bal the account balance/deposit/withdrawal.
+     * @param holder  the account holder.
+     * @param bal     the account balance/deposit/withdrawal.
      */
-    public void createC(String command, Profile holder, double bal) {
+    private void createC(String command, Profile holder, double bal) {
         if (command.equals("C")) {
             Checking acc = new Checking(holder, 0.0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
@@ -136,27 +138,26 @@ public class BankTeller {
             System.out.println("Withdraw - balance updated.");
         }
 
-        if (command.equals("O")){
+        if (command.equals("O")) {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
-            }
-            else if(isReopen(acc) == -4 || isReopen(acc) == -3) {
+            } else if (isReopen(acc) == -4 || isReopen(acc) == -3) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
-            }
-            else System.out.println("Account opened");
+            } else System.out.println("Account opened");
             db.open(acc);
         }
     }
 
     /**
      * creates a college checking account.
-     * @param campus the campus code.
+     *
+     * @param campus  the campus code.
      * @param command the specific command.
-     * @param holder the account holder
-     * @param bal the account balance/deposit/withdrawal.
+     * @param holder  the account holder
+     * @param bal     the account balance/deposit/withdrawal.
      */
-    public void createCC (int campus, String command, Profile holder, double bal) {
+    private void createCC(int campus, String command, Profile holder, double bal) {
         if (command.equals("C")) {
             CollegeChecking acc = new CollegeChecking(holder, 0.0, 0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
@@ -192,27 +193,26 @@ public class BankTeller {
             System.out.println("Withdraw - balance updated.");
         }
 
-        if (command.equals("O")){
+        if (command.equals("O")) {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
-            }
-            else if(isReopen(acc) == -4 || isReopen(acc) == -3) {
+            } else if (isReopen(acc) == -4 || isReopen(acc) == -3) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
-            }
-            else System.out.println("Account opened");
+            } else System.out.println("Account opened");
             db.open(acc);
         }
     }
 
     /**
      * method to create a savings account
-     * @param loyal loyalty code.
+     *
+     * @param loyal   loyalty code.
      * @param command specific command.
-     * @param holder holder of the account.
-     * @param bal account balance/deposit/withdrawal.
+     * @param holder  holder of the account.
+     * @param bal     account balance/deposit/withdrawal.
      */
-    public void createS(int loyal, String command, Profile holder, double bal) {
+    private void createS(int loyal, String command, Profile holder, double bal) {
         if (command.equals("C")) {
             Savings acc = new Savings(holder, 0.0, 0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
@@ -248,31 +248,28 @@ public class BankTeller {
             System.out.println("Withdraw - balance updated.");
         }
 
-        if (command.equals("O")){
+        if (command.equals("O")) {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
-            }
-            else if(isReopen(acc) == -4) {
+            } else if (isReopen(acc) == -4) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
-            }
-            else System.out.println("Account opened");
+            } else System.out.println("Account opened");
             db.open(acc);
         }
     }
 
     /**
      * Method that gathers all the necessary data and calls the specific method to create an account.
-     * @param input the input from the user
+     *
+     * @param input   the input from the user
      * @param command the command for what action to take.
      */
-    public void createAccount(StringTokenizer input, String command) {
+    private void createAccount(StringTokenizer input, String command) {
         if (command.equals("C") && input.countTokens() < 4) {
             System.out.println("Missing data for closing an account.");
             return;
-        }
-
-        else if (!command.equals("C") && input.countTokens() < 5) {
+        } else if (!command.equals("C") && input.countTokens() < 5) {
             System.out.println("Missing data for opening an account.");
             return;
         }
@@ -285,8 +282,7 @@ public class BankTeller {
         if (!command.equals("C")) {
             try {
                 bal = Double.parseDouble(input.nextToken());
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid balance.");
                 return;
             }
@@ -305,7 +301,7 @@ public class BankTeller {
             System.out.println("Initial deposit cannot be 0 or negative.");
             return;
         }
-        if (bal <= 0 && command.equals("D")){
+        if (bal <= 0 && command.equals("D")) {
             System.out.println("Deposit - amount cannot be 0 or negative.");
             return;
         }
@@ -317,13 +313,13 @@ public class BankTeller {
 
         if (type.equals("MM")) createMM(command, holder, bal);
         if (type.equals("C")) createC(command, holder, bal);
-        int campus = -1; int loyal = -1;
+        int campus = -1;
+        int loyal = -1;
         if (type.equals("CC")) {
             if (input.hasMoreTokens()) {
                 try {
                     campus = Integer.parseInt(input.nextToken());
-                }
-                catch(NumberFormatException ignored) {
+                } catch (NumberFormatException ignored) {
                 }
             }
             if ((campus < 0 || campus > 2) && command.equals("O")) {
@@ -336,8 +332,7 @@ public class BankTeller {
             if (input.hasMoreTokens()) {
                 try {
                     loyal = Integer.parseInt(input.nextToken());
-                }
-                catch(NumberFormatException ignored) {
+                } catch (NumberFormatException ignored) {
                 }
             }
             if ((loyal < 0 || loyal > 1) && command.equals("O")) {
@@ -351,15 +346,14 @@ public class BankTeller {
     /**
      * run method that prompts the console to start taking input using scanner and string tokenizer.
      */
-    public void run() {
+    private void run() {
         System.out.println("Bank Teller is running.");
         Scanner sc = new Scanner(System.in);
         while (true) {
             String read;
             try {
                 read = sc.nextLine();
-            }
-            catch (NoSuchElementException e) {
+            } catch (NoSuchElementException e) {
                 System.out.println("Invalid command!");
                 break;
             }
@@ -379,12 +373,12 @@ public class BankTeller {
             else if (command.equals("UB")) db.printUpdatedBalances();
             else if (!command.equals("O") && !command.equals("C") && !command.equals("D") && !command.equals("W")) {
                 System.out.println("Invalid Command!");
-            }
-            else createAccount(input, command);
+            } else createAccount(input, command);
 
         }
         System.out.println("Bank Teller is terminated.");
     }
+
     public static void main(String[] args) {
         BankTeller bt = new BankTeller();
         bt.run();
