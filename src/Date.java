@@ -109,11 +109,10 @@ public class Date implements Comparable<Date> {
     public static boolean validFormat(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
         if (s.countTokens() != 3) return false;
-        int temp;
         try {
-            temp = Integer.parseInt(s.nextToken());
-            temp = Integer.parseInt(s.nextToken());
-            temp = Integer.parseInt(s.nextToken());
+            Integer.parseInt(s.nextToken());
+            Integer.parseInt(s.nextToken());
+            Integer.parseInt(s.nextToken());
         }
         catch (NumberFormatException e) {
             return false;
