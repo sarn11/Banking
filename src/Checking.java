@@ -25,17 +25,15 @@ public class Checking extends Account{
 
     /**
      * Check if two checking accounts are equal (cannot have both a college checking and a normal checking).
-     * @param obj takes in a generic obj type
+     * @param obj takes in a generic obj type.
      * @return return true if the two accounts are the same.
      */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
-            if (!Objects.equals(((Account) obj).getType(), "Checking") &&
-                    !Objects.equals(((Account) obj).getType(), "College Checking")) return false;
+            if (!((Account) obj).getType().equals("Checking") &&
+                    !((Account) obj).getType().equals("College Checking")) return false;
             return this.holder.equals(((Account) obj).holder);
-
-
         }
         return false;
     }

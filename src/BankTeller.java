@@ -21,12 +21,15 @@ public class BankTeller {
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].equals(account) && accounts[i].closed &&
                 accounts[i].getType().equals(account.getType())) return -2;
-            if (accounts[i].equals(account) && accounts[i].getType().equals(account.getType())) return -4;
             if (accounts[i].equals(account) && !accounts[i].getType().equals(account.getType())) return -3;
-            if (accounts[i].equals(account)) return i;
+            if (accounts[i].equals(account) && accounts[i].getType().equals(account.getType())) return -4;
         }
         return -1;
     }
+    // -2 if accounts are EQUAL and its closed -reopen if called/cant deposit/cant withdraw.
+    // -3 if accounts are both checking type, but not same variation.
+    // -4 if accounts are EQUAL and its not closed.
+    // i if
 
     /**
      * creates a money market savings account.
@@ -40,7 +43,7 @@ public class BankTeller {
             MoneyMarket acc = new MoneyMarket(holder, 0.0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
             if (isReopen(acc) == -1) System.out.println(holder + " Money Market is not in the database.");
-            if (isReopen(acc) >= 0) {
+            if (isReopen(acc) == -4) {
                 System.out.println("Account closed.");
                 db.close(acc);
             }
@@ -61,11 +64,11 @@ public class BankTeller {
         if (command.equals("W")) {
             MoneyMarket acc = new MoneyMarket(holder, bal);
             boolean b = db.withdraw(acc);
-            if (isReopen(acc) == -1) {
+            if (isReopen(acc) == -1 || isReopen(acc) == -2) {
                 System.out.println(holder + " Money Market is not in the database.");
                 return;
             }
-            if (isReopen(acc) == -2 || !b) {
+            if (!b) {
                 System.out.println("Withdraw - insufficient funds.");
                 return;
             }
@@ -81,7 +84,7 @@ public class BankTeller {
                 if (isReopen(acc) == -2) {
                     System.out.println("Account reopened.");
                 }
-                else if(isReopen(acc) >= 0) {
+                else if(isReopen(acc) == -4) {
                     System.out.println(holder + " same account(type) is in the database.");
                     return;
                 }
@@ -102,7 +105,7 @@ public class BankTeller {
             Checking acc = new Checking(holder, 0.0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
             if (isReopen(acc) == -1) System.out.println(holder + " Checking is not in the database.");
-            if (isReopen(acc) >= 0) {
+            if (isReopen(acc) == -4) {
                 System.out.println("Account closed.");
                 db.close(acc);
             }
@@ -123,11 +126,11 @@ public class BankTeller {
         }
         if (command.equals("W")) {
             boolean b = db.withdraw(acc);
-            if (isReopen(acc) == -1) {
+            if (isReopen(acc) == -1 || isReopen(acc) == -3 || isReopen(acc) == -2) {
                 System.out.println(holder + " Checking is not in the database.");
                 return;
             }
-            if (isReopen(acc) == -2 || !b) {
+            if (!b) {
                 System.out.println("Withdraw - insufficient funds.");
                 return;
             }
@@ -138,7 +141,7 @@ public class BankTeller {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
             }
-            else if(isReopen(acc) >= 0) {
+            else if(isReopen(acc) == -4 || isReopen(acc) == -3) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
             }
@@ -159,7 +162,7 @@ public class BankTeller {
             CollegeChecking acc = new CollegeChecking(holder, 0.0, 0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
             if (isReopen(acc) == -1) System.out.println(holder + " Checking is not in the database.");
-            if (isReopen(acc) >= 0) {
+            if (isReopen(acc) == -4) {
                 System.out.println("Account closed.");
                 db.close(acc);
             }
@@ -179,11 +182,11 @@ public class BankTeller {
         }
         if (command.equals("W")) {
             boolean b = db.withdraw(acc);
-            if (isReopen(acc) == -1) {
+            if (isReopen(acc) == -1 || isReopen(acc) == -3 || isReopen(acc) == -2) {
                 System.out.println(holder + " College Checking is not in the database.");
                 return;
             }
-            if (isReopen(acc) == -2 || !b) {
+            if (!b) {
                 System.out.println("Withdraw - insufficient funds.");
                 return;
             }
@@ -194,7 +197,7 @@ public class BankTeller {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
             }
-            else if(isReopen(acc) >= 0 || isReopen(acc) == -3) {
+            else if(isReopen(acc) == -4 || isReopen(acc) == -3) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
             }
@@ -215,7 +218,7 @@ public class BankTeller {
             Savings acc = new Savings(holder, 0.0, 0);
             if (isReopen(acc) == -2) System.out.println("Account is closed already.");
             if (isReopen(acc) == -1) System.out.println(holder + " Savings is not in the database.");
-            if (isReopen(acc) >= 0) {
+            if (isReopen(acc) == -4) {
                 System.out.println("Account closed.");
                 db.close(acc);
             }
@@ -235,11 +238,11 @@ public class BankTeller {
         }
         if (command.equals("W")) {
             boolean b = db.withdraw(acc);
-            if (isReopen(acc) == -1) {
+            if (isReopen(acc) == -1 || isReopen(acc) == -2) {
                 System.out.println(holder + " Savings is not in the database.");
                 return;
             }
-            if (isReopen(acc) == -2 || !b) {
+            if (!b) {
                 System.out.println("Withdraw - insufficient funds.");
                 return;
             }
@@ -250,7 +253,7 @@ public class BankTeller {
             if (isReopen(acc) == -2) {
                 System.out.println("Account reopened.");
             }
-            else if(isReopen(acc) >= 0) {
+            else if(isReopen(acc) == -4) {
                 System.out.println(holder + " same account(type) is in the database.");
                 return;
             }
