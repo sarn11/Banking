@@ -17,10 +17,6 @@ public class MoneyMarket extends Savings{
         this.loyal = 1;
     }
 
-    public int getWithdraws() {
-        return withdrawals;
-    }
-
     /**
      * Convert account to a string with all its info.
      * @return returns the string

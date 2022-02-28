@@ -1,6 +1,5 @@
 import java.util.Calendar;
 import java.util.StringTokenizer;
-
 /**
  * This class defines the date object, as well as methods to check its validity, etc.
  * @author Aum Pathak, Tyler Sarno
@@ -102,6 +101,11 @@ public class Date implements Comparable<Date> {
         };
     }
 
+    /**
+     * checks if the string is a valid format to be cast as integers.
+     * @param date the date in form of a string
+     * @return true if valid, false otherwise
+     */
     public static boolean validFormat(String date) {
         StringTokenizer s = new StringTokenizer(date, "/");
         if (s.countTokens() != 3) return false;

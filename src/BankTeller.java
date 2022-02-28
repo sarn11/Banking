@@ -348,6 +348,9 @@ public class BankTeller {
         }
     }
 
+    /**
+     * run method that prompts the console to start taking input using scanner and string tokenizer.
+     */
     public void run() {
         System.out.println("Bank Teller is running.");
         Scanner sc = new Scanner(System.in);

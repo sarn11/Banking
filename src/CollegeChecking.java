@@ -3,10 +3,12 @@
  * @author Aum Pathak, Tyler Sarno
  */
 public class CollegeChecking extends Checking {
-
-
     protected String campus;
 
+    /**
+     * getter method for the campus code
+     * @return returns the campus as a string.
+     */
     public String getCampus() {
         return campus;
     }

@@ -188,6 +188,9 @@ public class AccountDatabase {
         System.out.println("*end of list*");
     }
 
+    /**
+     * prints all accounts along with their fees and monthly interest.
+     */
     public void printFeeAndInterest() {
         if(numAcct == 0) {
             System.out.println("Account Database is empty!");

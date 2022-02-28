@@ -1,4 +1,3 @@
-import java.util.StringTokenizer;
 /**
  * This class defines the profile for a banking customer.
  * @author Aum Pathak, Tyler Sarno

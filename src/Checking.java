@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 /**
  * A subclass of Account, this class defines the checking account.
  * @author Aum Pathak, Tyler Sarno
