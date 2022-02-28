@@ -40,7 +40,7 @@ public class CollegeChecking extends Checking {
      * @return the interest as a double.
      */
     public double monthlyInterest() {
-        if (this.closed) return -1; //closed account
+        if (this.closed) return 0; //closed account
         if (this.balance < 0) return 0;
         return this.balance * .0025/12;
     }

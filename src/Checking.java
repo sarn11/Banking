@@ -44,7 +44,7 @@ public class Checking extends Account{
      * @return the interest as a double.
      */
     public double monthlyInterest() {
-        if (this.closed) return -1; //closed account
+        if (this.closed) return 0; //closed account
         if (this.balance < 0) return 0;
         return this.balance * (.001/12);
     }
@@ -54,7 +54,7 @@ public class Checking extends Account{
      * @return return the monthly fee.
      */
     public double fee() {
-        if (this.closed) return -1; //closed account
+        if (this.closed) return 0; //closed account
         if (this.balance < 1000) return 25.0;
         else return 0;
     }
