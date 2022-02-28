@@ -29,7 +29,6 @@ public class BankTeller {
     // -2 if accounts are EQUAL and its closed -reopen if called/cant deposit/cant withdraw.
     // -3 if accounts are both checking type, but not same variation.
     // -4 if accounts are EQUAL and its not closed.
-    // i if
 
     /**
      * creates a money market savings account.

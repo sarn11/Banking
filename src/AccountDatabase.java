@@ -72,6 +72,9 @@ public class AccountDatabase {
             if (accounts[accIndex].getType().equals("Money Market Savings") && accounts[accIndex].balance > 2500){
                 ((MoneyMarket)accounts[accIndex]).setLoyal(1);
             }
+            if (accounts[accIndex].getType().equals("College Checking")) {
+                ((CollegeChecking)accounts[accIndex]).campus =((CollegeChecking)account).campus;
+            }
             return true; //acc needs to be reopened (handle in the console).
         }
 
@@ -96,6 +99,7 @@ public class AccountDatabase {
         }
         if (accounts[index].getType().equals("Money Market Savings")) {
             ((MoneyMarket)accounts[index]).setLoyal(0);
+            ((MoneyMarket)accounts[index]).withdrawals = 0;
         }
         return true;
     }
@@ -106,13 +110,7 @@ public class AccountDatabase {
      */
     public void deposit(Account account) {
         int index = find(account);
-        if (index == -1) {
-            System.out.println(account.holder.toString() + " " + account.getType() + " is not in the database.");
-        }
 
-        if (index >= 0 && accounts[index].closed) {
-            System.out.println(account.holder.toString() + " " + account.getType() + " has been closed, deposit failed.");
-        }
         accounts[index].deposit(account.balance);
         if (accounts[index].getType().equals("Money Market Savings")) {
             ((MoneyMarket) accounts[index]).setLoyal(1);
@@ -160,22 +158,17 @@ public class AccountDatabase {
     /**
      * method that sorts the database for printing (uses insertion sort).
      */
-    private Account[] sortDatabase() {
-        Account[] tempSorted = new Account[numAcct];
-        for (int i = 0; i < numAcct; i++) {
-            tempSorted[i] = accounts[i];
-        }
+    private void sortDatabase() {
 
         for (int i = 1; i < numAcct; i++) {
-            Account temp = tempSorted[i];
+            Account temp = accounts[i];
             int j = i - 1;
-            while (j >= 0 && tempSorted[j].getType().compareTo(temp.getType()) > 0) {
-                tempSorted[j + 1] = tempSorted[j];
+            while (j >= 0 && accounts[j].getType().compareTo(temp.getType()) > 0) {
+                accounts[j + 1] = accounts[j];
                 j--;
             }
-            tempSorted[j + 1] = temp;
+            accounts[j + 1] = temp;
         }
-        return tempSorted;
     }
 
     /**
@@ -188,9 +181,9 @@ public class AccountDatabase {
         }
         System.out.println("*list of accounts by account type*");
 
-        Account[] temp = sortDatabase();
+        sortDatabase();
         for (int i = 0; i < numAcct; i++){
-            System.out.println(temp[i].toString());
+            System.out.println(accounts[i].toString());
         }
         System.out.println("*end of list*");
     }
