@@ -148,11 +148,13 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
+        System.out.println('\n');
         System.out.println("*list of accounts in the database*");
         for (int i = 0; i < numAcct; i++){
             System.out.println(accounts[i].toString());
         }
         System.out.println("*end of list*");
+        System.out.println('\n');
     }
 
     /**
@@ -179,13 +181,13 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*list of accounts by account type*");
+        System.out.println('\n' + "*list of accounts by account type*");
 
         sortDatabase();
         for (int i = 0; i < numAcct; i++){
             System.out.println(accounts[i].toString());
         }
-        System.out.println("*end of list*");
+        System.out.println("*end of list*" + '\n');
     }
 
     /**
@@ -196,7 +198,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*list of accounts with fees and monthly interest*");
+        System.out.println('\n' + "*list of accounts with fees and monthly interest*");
         DecimalFormat fmt = new DecimalFormat("###,##0.00");
         String fee;
         String monthlyInt;
@@ -206,7 +208,7 @@ public class AccountDatabase {
             monthlyInt = fmt.format((accounts[i].monthlyInterest()));
             System.out.println(accounts[i].toString() + "::" + "fee $" + fee + "::" + "monthly interest $" + monthlyInt);
         }
-        System.out.println("*end of list*");
+        System.out.println("*end of list*" + '\n');
     }
 
     /**
@@ -217,7 +219,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*list of accounts with updated balance*");
+        System.out.println('\n' + "*list of accounts with updated balance*");
 
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].closed) continue;
@@ -230,6 +232,6 @@ public class AccountDatabase {
         for (int i = 0; i < numAcct; i++){
             System.out.println(accounts[i].toString());
         }
-        System.out.println("*end of list*");
+        System.out.println("*end of list*" + '\n');
     }
 }
