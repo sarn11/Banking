@@ -92,8 +92,13 @@ public class AccountDatabase {
     public boolean close(Account account) {
         int index = find(account);
         if (index == -1) return false;
+
+        // If account is already closed.
+        if (accounts[index].closed) return false;
+
         accounts[index].closed = true;
         accounts[index].balance = 0;
+
         if(accounts[index].getType().equals("Savings")){
             ((Savings)accounts[index]).setLoyal(0);
         }

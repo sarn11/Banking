@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 /**
  * Bank Teller program to take info from the client through the console.
  *
- * @author Tyler Sarno.
+ * @author Tyler Sarno, Aum Pathak
  */
 public class BankTeller {
     private Date today = new Date();
