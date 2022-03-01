@@ -29,10 +29,18 @@ public class Savings extends Account{
         return super.toString();
     }
 
+    /**
+     * setter method for loyalty status.
+     * @param loyal the loyalty code.
+     */
     public void setLoyal(int loyal) {
         this.loyal = loyal;
     }
 
+    /**
+     * getter method for the loyalty status.
+     * @return returns the loyalty status.
+     */
     public String getLoyal() {
         if(this.loyal == 1) return "loyal";
         return "";
