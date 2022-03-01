@@ -346,7 +346,7 @@ public class BankTeller {
     /**
      * run method that prompts the console to start taking input using scanner and string tokenizer.
      */
-    private void run() {
+    protected void run() {
         System.out.println("Bank Teller is running.");
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -377,10 +377,5 @@ public class BankTeller {
 
         }
         System.out.println("Bank Teller is terminated.");
-    }
-
-    public static void main(String[] args) {
-        BankTeller bt = new BankTeller();
-        bt.run();
     }
 }
