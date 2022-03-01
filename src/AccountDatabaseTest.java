@@ -2,6 +2,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This JUnit class tests the open() and close() method of the AccountDatabase class
+ * @author Aum Pathak, Tyler Sarno
+ */
+
 class AccountDatabaseTest {
 
     AccountDatabase db = new AccountDatabase();
